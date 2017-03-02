@@ -30,14 +30,14 @@ public class Application {
 		Result result = basketPricingService.getResult(input);
 		if (Optional.of(result).isPresent()) {
 			System.out.println(result);
-			System.out.println("Subtotal: " + result.getSubTotal());
+			System.out.println("Subtotal: £" + result.getSubTotal());
 			BigDecimal totalDiscount = BigDecimal.ZERO;
 			for (DiscountResult discountResult : result.getDiscountResults()) {
 				System.out.println(discountResult.getName() + " " + discountResult.getDiscountInPercentage()
 								+ "% off: -" + discountResult.getActualDiscount());
 				totalDiscount = totalDiscount.add(discountResult.getActualDiscount());
 			}
-			System.out.println("Total price: " + result.getSubTotal().subtract(totalDiscount));
+			System.out.println("Total : £" + result.getSubTotal().subtract(totalDiscount));
 		} else {
 			log.info("No Results found");
 		}
