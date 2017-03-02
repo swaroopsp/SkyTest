@@ -2,12 +2,14 @@ package com.bjss.test.service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.bjss.test.model.Discount;
 import com.bjss.test.model.DiscountResult;
@@ -15,9 +17,11 @@ import com.bjss.test.model.Item;
 import com.bjss.test.model.Result;
 
 import lombok.Builder;
+import lombok.extern.slf4j.Slf4j;
 
 @Builder
 @Service
+@Slf4j
 public class BasketPricingService {
 	@Autowired
 	private ItemService itemService;
@@ -25,12 +29,24 @@ public class BasketPricingService {
 	@Autowired
 	private DiscountService discountService;
 
-	public Result getResult(List<String> items) {
-		List<Item> items2 = itemService.getAllItems()
+	public Result getResult(String input) {
+		if (StringUtils.isEmpty(input)) {
+			log.error("Input can not be empty");
+			throw new IllegalArgumentException("Input can not be empty");
+		}
+
+		List<String> elements = getAllElements(input);
+
+		List<String> items = elements.subList(1, elements.size());
+		if (items.size() == 0) {
+			log.error("No item found");
+			throw new IllegalArgumentException("No item found");
+		}
+		List<Item> filteredItems = itemService.getAllItems()
 							.stream()
 							.filter(item -> items.contains(item.getName()))
 							.collect(Collectors.toList());
-		return filterResult(items2);
+		return filterResult(filteredItems);
 	}
 
 	private Result filterResult(List<Item> items) {
@@ -61,5 +77,8 @@ public class BasketPricingService {
 		}
 	}
 	
+	private static List<String> getAllElements(String input) {
+		return Arrays.asList(input.split("\\s+"));
+	}
 	
 }
