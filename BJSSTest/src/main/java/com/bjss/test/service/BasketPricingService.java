@@ -15,6 +15,8 @@ import com.bjss.test.model.Discount;
 import com.bjss.test.model.DiscountResult;
 import com.bjss.test.model.Item;
 import com.bjss.test.model.Result;
+import com.bjss.test.service.DiscountService;
+import com.bjss.test.service.ItemService;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
