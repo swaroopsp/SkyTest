@@ -1,17 +1,18 @@
 package com.deutschebank.app.repository;
 
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;
-
-import com.deutschebank.app.db.model.ShopDTO;
+import org.springframework.data.repository.query.Param;
 
 @NoRepositoryBean
 public interface ShopRepository<ShopDTO> extends Repository<ShopDTO, Long> {
 	public ShopDTO save(ShopDTO shop);
-	
-//	@Query("SELECT t FROM Todo t WHERE " +
-//		            "LOWER(t.title) LIKE LOWER(CONCAT('%',:searchTerm, '%')) OR " +
-//		            "LOWER(t.description) LIKE LOWER(CONCAT('%',:searchTerm, '%'))")
-//    Page<Todo> findBySearchTerm(@Param("searchTerm") String searchTerm);
 
+	public Boolean existsByShopName(String shopName);
+
+	@Modifying(clearAutomatically = true)
+	@Query("UPDATE Shop s SET s.date = CURRENT_DATE WHERE s.companyName = :companyName")
+	public ShopDTO updateShopDate(@Param("companyName") String companyName);
 }
