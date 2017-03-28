@@ -1,7 +1,8 @@
 package com.deutschebank.app.exception;
 
-import javax.ws.rs.ext.Provider;
-
+/**
+ * Created by swaroop on 27/03/2017.
+ */
 public class ApplicationException extends RuntimeException {
 	private static final long serialVersionUID = -6672254138772742602L;
 
