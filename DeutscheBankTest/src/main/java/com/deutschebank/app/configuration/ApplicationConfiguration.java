@@ -1,45 +1,26 @@
 package com.deutschebank.app.configuration;
 
-import java.util.UUID;
-
-import javax.annotation.PreDestroy;
-
-import org.elasticsearch.client.Client;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.deutschebank.app.service.GoogleMapsService;
+import com.deutschebank.app.service.ShopService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.elasticsearch.client.NodeClientFactoryBean;
-import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
-
-import com.deutschebank.app.client.model.Conference;
-import com.deutschebank.app.repository.ConferenceRepository;
+import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@EnableElasticsearchRepositories
-class ApplicationConfiguration {
+@PropertySource(value= {"classpath:application.properties"})
 
-	@Autowired ElasticsearchOperations operations;
-	@Autowired ConferenceRepository repository;
+/**
+ * Created by swaroop on 27/03/2017.
+ */
+public class ApplicationConfiguration {
 
-	@Bean
-	public NodeClientFactoryBean client() {
-		NodeClientFactoryBean bean = new NodeClientFactoryBean(true);
-		bean.setClusterName(UUID.randomUUID().toString());
-		bean.setEnableHttp(false);
+    @Bean
+    public GoogleMapsService getGoogleMapsService() {
+        return new GoogleMapsService();
+    }
 
-		return bean;
-	}
-
-	@Bean
-	public ElasticsearchTemplate elasticsearchTemplate(Client client) throws Exception {
-		return new ElasticsearchTemplate(client);
-	}
-
-	@PreDestroy
-	public void deleteIndex() {
-		operations.deleteIndex(Conference.class);
-	}
-
+    @Bean
+    public ShopService getShopService() {
+        return new ShopService();
+    }
 }

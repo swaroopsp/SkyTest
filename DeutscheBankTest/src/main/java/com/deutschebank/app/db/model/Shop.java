@@ -1,9 +1,9 @@
-package com.deutschebank.app.client.model;
+package com.deutschebank.app.db.model;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,26 +11,34 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Builder;
 
+@Entity
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+/**
+ * Created by swaroop on 27/03/2017.
+ */
 public class Shop {
+	@Version
+	private long version;
+
 	@NotNull
 	@NotEmpty
+	@Id
 	private String shopName;
 
 	@NotNull
 	@NotEmpty
-	private ShopAddress shopAddress;
+	private String number;
 
 	@NotNull
 	@NotEmpty
-	private GeoPoint geoLocation;
+	private String postCode;
 
-	public String getAddress() {
-		return new StringBuilder().append(shopName).append(" ").append(shopAddress.getNumber()).append(" ")
-				.append(shopAddress.getPostCode()).toString();
-	}
+	private double latitude;
+
+	private double longitude;
+
 }

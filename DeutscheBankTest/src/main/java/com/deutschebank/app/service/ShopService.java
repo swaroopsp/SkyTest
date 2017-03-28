@@ -1,51 +1,36 @@
 package com.deutschebank.app.service;
 
-import java.util.List;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.geo.GeoPoint;
-import org.springframework.data.elasticsearch.core.query.Criteria;
-import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
 
-import com.deutschebank.app.client.model.Conference;
-import com.deutschebank.app.client.model.GeoLocation;
-import com.deutschebank.app.client.model.Shop;
-import com.deutschebank.app.db.model.ShopDTO;
+import com.deutschebank.app.Shops;
+import com.deutschebank.app.client.model.ShopDTO;
+import com.deutschebank.app.client.model.VersionDTO;
+import com.deutschebank.app.db.model.Shop;
 import com.deutschebank.app.repository.ShopRepository;
-
+/**
+ * Created by swaroop on 27/03/2017.
+ */
 public class ShopService {
 	@Autowired
 	private GoogleMapsService googleMapsService;
 
 	@Autowired
-	private ShopRepository<ShopDTO> shopRepository;
+	private ShopRepository shopRepository;
 
-	@Autowired
-	ElasticsearchOperations operations;
-
-	public ShopDTO saveShop(Shop clientShop) throws Exception {
-		GeoLocation geoLocation = googleMapsService.getLatLongPositions(clientShop.getAddress());
-
-		ShopDTO shop = ShopDTO.builder().postCode(clientShop.getShopName())
-										.number(clientShop.getShopAddress().getNumber())
-										.postCode(clientShop.getShopAddress().getPostCode())
-										.latitude(geoLocation.getLatitude())
-										.longitude(geoLocation.getLongitude()).build();
-		
-		if (shopRepository.existsByShopName(clientShop.getShopName())) {
-			return shopRepository.updateShopDate(clientShop.getShopName());
+	@Transactional
+	public VersionDTO addShop(ShopDTO shopDTO) {
+		GeoPoint geoPoint = googleMapsService.getLatLongPositions(shopDTO.getFullAddress());
+		com.deutschebank.app.db.model.Shop existingShopDTODTO = shopRepository.findByShopName(shopDTO.getShopName());
+		if (existingShopDTODTO != null) {
+			shopRepository.updateShop(shopDTO.getShopName(), existingShopDTODTO.getVersion() + 1);
+			return VersionDTO.builder().version(shopRepository.findByShopName(shopDTO.getShopName()).getVersion()).build();
 		} else {
-			return shopRepository.save(shop);
+			Shop shop = Shops.of(shopDTO, geoPoint);
+			shop = shopRepository.save(shop);
+			return VersionDTO.builder().version(shop.getVersion()).build();
 		}
-	}
-
-	public List<ShopDTO> getShops(GeoPoint geoLocation) {
-		GeoPoint startLocation = new GeoPoint(50.0646501D, 19.9449799D);
-		String range = "330mi"; // or 530km
-		CriteriaQuery query = new CriteriaQuery(new Criteria("location").within(startLocation, range));
-
-		List<Conference> result = operations.queryForList(query, Conference.class);
-		return null;
 	}
 }

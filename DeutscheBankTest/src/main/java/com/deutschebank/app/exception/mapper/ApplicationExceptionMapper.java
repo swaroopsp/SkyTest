@@ -6,7 +6,9 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 import com.deutschebank.app.exception.ApplicationException;
-
+/**
+ * Created by swaroop on 27/03/2017.
+ */
 @Provider
 public class ApplicationExceptionMapper implements ExceptionMapper<ApplicationException> {
 	@Override
