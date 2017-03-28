@@ -1,4 +1,4 @@
-package com.deutschebank.test;
+package com.deutschebank.test.repository;
 
 import static org.junit.Assert.assertEquals;
 
@@ -42,23 +42,19 @@ public class ShopRepositoryTests {
 		Shop shopOne = shopRepository.findByShopName("Argos");
 		Shop shopTwo = shopRepository.findByShopName("Argos");
 
-		// At first, serialize the movies to transport them to a view.
 		ShopDTO shopDTOOne = Shops.of(shopOne);
 		ShopDTO shopDTOTwo = Shops.of(shopTwo);
 
-		// The view modifies the transport objects.
 		shopDTOOne.setVersion(1);
 		shopDTOTwo.setVersion(0);
 		GeoPoint geoPoint = new GeoPoint(1.1, 1.1);
-		// The view sends the transport objects to the backend.
+
 		Shop theUpdatedShopOne = Shops.of(shopDTOOne, geoPoint);
 		Shop theUpdatedShopTwo = Shops.of(shopDTOTwo, geoPoint);
 
-		// The versions of the updateded movies are both 0.
 		assertEquals(0, theUpdatedShopOne.getVersion());
 		assertEquals(0, theUpdatedShopTwo.getVersion());
 
-		// The backend tries to save both.
 		shopRepository.save(theUpdatedShopOne);
 
 		// OUTCH! Exception!

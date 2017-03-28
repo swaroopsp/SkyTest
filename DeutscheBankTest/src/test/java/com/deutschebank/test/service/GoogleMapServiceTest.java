@@ -1,4 +1,4 @@
-package com.deutschebank.test;
+package com.deutschebank.test.service;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
