@@ -14,7 +14,7 @@ public class GoogleMapExceptionMapper implements ExceptionMapper<GoogleMapExcept
 	@Override
 	public Response toResponse(GoogleMapException e) {
 
-		return Response.status(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()).type(MediaType.TEXT_PLAIN)
+		return Response.status(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()).type(MediaType.APPLICATION_JSON)
 						.entity("Catching GoogleMapException : " + e.getMessage()).build();
 	}
 }

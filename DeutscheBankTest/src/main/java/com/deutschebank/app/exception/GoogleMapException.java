@@ -13,4 +13,8 @@ public class GoogleMapException extends RuntimeException {
 	public GoogleMapException(String string) {
 		super(string);
 	}
+	
+	public GoogleMapException(Exception exception, String string) {
+		super(string, exception);
+	}
 }

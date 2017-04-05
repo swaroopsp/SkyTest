@@ -29,13 +29,13 @@ public class Shop {
 	@Id
 	private String shopName;
 
-	@NotNull
-	@NotEmpty
 	private String number;
 
 	@NotNull
 	@NotEmpty
 	private String postCode;
+	
+	private String fullAddress;
 
 	private double latitude;
 

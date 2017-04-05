@@ -1,11 +1,15 @@
 package com.deutschebank.app.repository;
 
-import com.deutschebank.app.db.model.Shop;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import com.deutschebank.app.db.model.Shop;
+
 /**
  * Created by swaroop on 27/03/2017.
  */
@@ -16,4 +20,7 @@ public interface ShopRepository extends CrudRepository<Shop, Long> {
 	@Modifying
 	@Query("UPDATE Shop s SET s.version = :version WHERE s.shopName = :shopName")
 	public void updateShop(@Param("shopName") String shopName, @Param("version") long version);
+	
+	@Query("select u from Shop u where u.postCode like '%:partialpostCode%'")
+	List<Shop> findNearestShopBypostCodeLike(@Param("partialpostCode") String partialpostCode);
 }

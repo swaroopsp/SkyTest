@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.deutschebank.app.exception.mapper.GenericExceptionMapper;
 import com.deutschebank.app.exception.mapper.GoogleMapExceptionMapper;
@@ -13,7 +14,8 @@ import com.deutschebank.app.service.GoogleMapsService;
  * Created by swaroop on 27/03/2017.
  */
 @Configuration
-@PropertySource(value= {"classpath:test.properties"})
+@PropertySource(value= {"classpath:application.properties"})
+@EnableJpaRepositories("com.deutschebank.app.repository")
 public class TestApplicationConfiguration extends ResourceConfig{
 
     @Bean

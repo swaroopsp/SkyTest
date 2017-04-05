@@ -15,6 +15,8 @@ import lombok.experimental.Builder;
  * Created by swaroop on 27/03/2017.
  */
 public class GeoLocationDTO {
-	private String latitude;
-	private String longitude;
+	private double latitude;
+	private double longitude;
+	private String fullAddress;
+	private String postCode;
 }

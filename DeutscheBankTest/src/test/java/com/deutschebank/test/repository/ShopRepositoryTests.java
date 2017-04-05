@@ -2,17 +2,18 @@ package com.deutschebank.test.repository;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.deutschebank.app.App;
 import com.deutschebank.app.Shops;
+import com.deutschebank.app.client.model.GeoLocationDTO;
 import com.deutschebank.app.client.model.ShopDTO;
 import com.deutschebank.app.db.model.Shop;
 import com.deutschebank.app.repository.ShopRepository;
@@ -35,6 +36,11 @@ public class ShopRepositoryTests {
 		shopRepository.save(shopDTO2);
 		shopRepository.save(shopDTO3);
 	}
+	
+	@After
+	public void tearDown(){
+		shopRepository.deleteAll();
+	}
 
 	@Test(expected = ObjectOptimisticLockingFailureException.class)
 	public void testConcurrencyWriting() {
@@ -47,7 +53,11 @@ public class ShopRepositoryTests {
 
 		shopDTOOne.setVersion(1);
 		shopDTOTwo.setVersion(0);
-		GeoPoint geoPoint = new GeoPoint(1.1, 1.1);
+		GeoLocationDTO geoPoint = GeoLocationDTO
+						.builder()
+						.latitude(1.1)
+						.longitude(1.1)
+						.build();
 
 		Shop theUpdatedShopOne = Shops.of(shopDTOOne, geoPoint);
 		Shop theUpdatedShopTwo = Shops.of(shopDTOTwo, geoPoint);

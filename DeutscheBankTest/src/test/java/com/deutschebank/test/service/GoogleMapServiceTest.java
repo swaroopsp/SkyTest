@@ -8,20 +8,18 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.data.elasticsearch.core.geo.GeoPoint;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.deutschebank.app.App;
+import com.deutschebank.app.client.model.GeoLocationDTO;
 import com.deutschebank.app.exception.GoogleMapException;
 import com.deutschebank.app.service.GoogleMapsService;
-import com.deutschebank.test.configuration.TestApplicationConfiguration;
 /**
  * Created by swaroop on 27/03/2017.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestApplicationConfiguration.class)
-@EnableAutoConfiguration
+@SpringApplicationConfiguration(classes = App.class)
 public class GoogleMapServiceTest {
 
 	@Autowired
@@ -37,15 +35,15 @@ public class GoogleMapServiceTest {
 
 	@Test
 	public void testGetLatLongPositions() {
-		GeoPoint geoPoint = googleMapsService.getLatLongPositions("Argos 6 GU51 3LA");
-		assertThat(51.2804565, is(geoPoint.getLat()));
-		assertThat(-0.8416743999999999, is(geoPoint.getLon()));
+		GeoLocationDTO geoPoint = googleMapsService.getLatLongPositions("Argos 6 GU51 3LA");
+		assertThat(51.2804565, is(geoPoint.getLatitude()));
+		assertThat(-0.8416743999999999, is(geoPoint.getLongitude()));
 	}
 	
 	@Test(expected=GoogleMapException.class)
 	public void testGetLatLongPositionsEmptyAddress() {
-		GeoPoint geoPoint = googleMapsService.getLatLongPositions("");
-		assertThat(51.2804565, is(geoPoint.getLat()));
-		assertThat(-0.8416743999999999, is(geoPoint.getLon()));
+		GeoLocationDTO geoPoint = googleMapsService.getLatLongPositions("");
+		assertThat(51.2804565, is(geoPoint.getLatitude()));
+		assertThat(-0.8416743999999999, is(geoPoint.getLongitude()));
 	}
 }
