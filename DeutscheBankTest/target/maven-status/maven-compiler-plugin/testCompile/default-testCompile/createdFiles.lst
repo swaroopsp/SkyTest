@@ -1,0 +1,8 @@
+com\deutschebank\test\service\ShopServiceTest.class
+com\deutschebank\test\ShopControllerExceptionTest.class
+com\deutschebank\test\utils\TestUtils.class
+com\deutschebank\test\configuration\TestApplicationConfiguration.class
+com\deutschebank\test\ShopControllerExceptionTest$MockGoogleMapServiceProvider.class
+com\deutschebank\test\service\GoogleMapServiceTest.class
+com\deutschebank\test\ShopControllerTest.class
+com\deutschebank\test\repository\ShopRepositoryTests.class

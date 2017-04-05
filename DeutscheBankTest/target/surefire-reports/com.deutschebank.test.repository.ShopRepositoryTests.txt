@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.deutschebank.test.repository.ShopRepositoryTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.297 sec - in com.deutschebank.test.repository.ShopRepositoryTests

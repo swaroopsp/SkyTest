@@ -10,7 +10,7 @@ import javax.ws.rs.ext.Provider;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import com.deutschebank.app.ShopController;
+import com.deutschebank.app.controller.ShopController;
 import com.deutschebank.app.exception.GoogleMapException;
 import com.deutschebank.app.exception.mapper.GoogleMapExceptionMapper;
 import com.deutschebank.app.service.GoogleMapsService;

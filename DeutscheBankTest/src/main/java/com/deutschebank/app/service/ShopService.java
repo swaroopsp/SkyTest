@@ -10,8 +10,6 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.deutschebank.app.Shops;
-import com.deutschebank.app.client.model.ClientAddressDTO;
 import com.deutschebank.app.client.model.GeoLocationDTO;
 import com.deutschebank.app.client.model.ShopDTO;
 import com.deutschebank.app.client.model.ShopDistanceDTO;
@@ -19,6 +17,7 @@ import com.deutschebank.app.client.model.VersionDTO;
 import com.deutschebank.app.db.model.Shop;
 import com.deutschebank.app.exception.ApplicationException;
 import com.deutschebank.app.repository.ShopRepository;
+import com.deutschebank.app.utils.Shops;
 
 /**
  * Created by swaroop on 27/03/2017.

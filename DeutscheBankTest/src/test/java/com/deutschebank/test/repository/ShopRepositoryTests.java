@@ -12,11 +12,11 @@ import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.deutschebank.app.App;
-import com.deutschebank.app.Shops;
 import com.deutschebank.app.client.model.GeoLocationDTO;
 import com.deutschebank.app.client.model.ShopDTO;
 import com.deutschebank.app.db.model.Shop;
 import com.deutschebank.app.repository.ShopRepository;
+import com.deutschebank.app.utils.Shops;
 
 /**
  * Created by swaroop on 27/03/2017.
