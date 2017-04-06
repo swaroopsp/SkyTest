@@ -21,6 +21,7 @@ public interface ShopRepository extends CrudRepository<Shop, Long> {
 	@Query("UPDATE Shop s SET s.version = :version WHERE s.shopName = :shopName")
 	public void updateShop(@Param("shopName") String shopName, @Param("version") long version);
 	
+	//possible solution for quicker post code search filtering
 	@Query("select u from Shop u where u.postCode like '%:partialpostCode%'")
 	List<Shop> findNearestShopBypostCodeLike(@Param("partialpostCode") String partialpostCode);
 }

@@ -52,17 +52,21 @@ public class GoogleMapsService {
     }
     
 	public long getDistance(String origins, String destinations) {
-		GeoApiContext context = new GeoApiContext().setApiKey(apiKeyDistanceMatrix);
-		DistanceMatrix results = null;
-		try {
-			results = DistanceMatrixApi
-							.getDistanceMatrix(context, new String[] { origins }, new String[] { destinations })
-							.units(Unit.METRIC).await();
-		} catch (ApiException | InterruptedException | IOException exception) {
-			final String message = "Something went wrong while connecting to google distance matrix service";
-			log.error(message);
-			throw new GoogleMapException(exception, message);
-		}
-		return results.rows[0].elements[0].distance.inMeters / 1000;
+		if(StringUtils.isNotEmpty(origins) && StringUtils.isNotEmpty(destinations)){
+			GeoApiContext context = new GeoApiContext().setApiKey(apiKeyDistanceMatrix);
+			DistanceMatrix results = null;
+			try {
+				results = DistanceMatrixApi
+								.getDistanceMatrix(context, new String[] { origins }, new String[] { destinations })
+								.units(Unit.METRIC).await();
+			} catch (ApiException | InterruptedException | IOException exception) {
+				final String message = "Something went wrong while connecting to google distance matrix service";
+				log.error(message);
+				throw new GoogleMapException(exception, message);
+			}
+			return results.rows[0].elements[0].distance.inMeters / 1000;
+		}else{
+    		throw new GoogleMapException("Input to Distance matrix Service can not be empty.");
+    	}
 	}
 }

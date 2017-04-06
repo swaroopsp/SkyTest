@@ -1,10 +1,8 @@
- package com.deutschebank.test;
+ package com.deutschebank.test.controller;
 
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -51,14 +49,26 @@ public class ShopControllerTest {
 	public void testAddShop() throws Exception {
 		String result = new TestUtils().getFile("input.json");
 
-		given().contentType("application/json").body(result).when().post("/shops/shop").then().statusCode(200)
-						.body("version", equalTo(0));
+		given()
+			.contentType("application/json")
+			.body(result)
+			.when()
+			.post("/shops/shop")
+			.then()
+			.statusCode(200)
+			.body("version", equalTo(0));
 	}
 
 	@Test
 	public void testAddShopMissingInput() throws Exception {
 		String result = new TestUtils().getFile("input_missing_entries.json");
-		given().contentType("application/json").body(result).when().post("/shops/shop").then().statusCode(500);
+		given()
+			.contentType("application/json")
+			.body(result)
+			.when()
+			.post("/shops/shop")
+			.then()
+			.statusCode(500);
 	}
 	
 	@Test
@@ -69,11 +79,26 @@ public class ShopControllerTest {
 		shopRepository.save(shopDTO1);
 		shopRepository.save(shopDTO2);
 		shopRepository.save(shopDTO3);
-		given().contentType("application/json").param("adrress", "1, champion way, fleet, gu526ht").when().get("/shops/shop/nearest").then().statusCode(200);
+		given()
+			.contentType("application/json")
+			.param("adrress", "1, champion way, fleet, gu526ht")
+			.when()
+			.get("/shops/shop/nearest")
+			.then()
+			.statusCode(200)
+			.body("shopName", equalTo("Argos"))
+			.body("distance", equalTo(2))
+			.body("shopFullAddress", equalTo("Argos, 6, The Hart Centre, Fleet Rd, Fleet GU51 3LA"));
 	}
 	
 	@Test
 	public void testGetClosestShopMissingInput() throws Exception {
-		given().contentType("application/json").param("adrress", "").when().get("/shops/shop/nearest").then().statusCode(500);
+		given()
+			.contentType("application/json")
+			.param("adrress", "")
+			.when()
+			.get("/shops/shop/nearest")
+			.then()
+			.statusCode(500);
 	}
 }

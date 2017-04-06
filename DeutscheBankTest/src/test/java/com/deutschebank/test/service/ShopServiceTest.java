@@ -16,6 +16,9 @@ import com.deutschebank.app.db.model.Shop;
 import com.deutschebank.app.repository.ShopRepository;
 import com.deutschebank.app.service.ShopService;
 
+/**
+ * Created by swaroop on 27/03/2017.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = App.class)
 public class ShopServiceTest {

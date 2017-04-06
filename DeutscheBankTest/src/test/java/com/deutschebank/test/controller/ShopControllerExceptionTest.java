@@ -1,4 +1,4 @@
-package com.deutschebank.test;
+package com.deutschebank.test.controller;
 
 import static org.junit.Assert.assertEquals;
 
