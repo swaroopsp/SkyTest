@@ -1,4 +1,4 @@
-package com.sky.parentalcontrol.constant;
+package com.sky.parentalcontrol.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

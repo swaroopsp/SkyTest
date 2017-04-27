@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.sky.parentalcontrol.constant.ApplicationConfiguration;
+import com.sky.parentalcontrol.configuration.ApplicationConfiguration;
 import com.sky.parentalcontrol.constant.MovieMetaData;
 import com.sky.parentalcontrol.constant.ParentalControlLevel;
 import com.sky.parentalcontrol.exception.TechnicalFailureException;
